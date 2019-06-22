@@ -7,6 +7,12 @@ namespace PersonalBackend.Domain
 {
     public abstract class PersonalBackendBase
     {
+        #region Constansts
+
+        private const int UniqueKeyMaxLength = 128;
+
+        #endregion Constansts
+
         #region Fields
 
         private readonly IValuesRepository _values;
@@ -47,7 +53,8 @@ namespace PersonalBackend.Domain
         protected bool Set<TObject>(string uniqueKey, TObject @object)
             where TObject : class
         {
-            if (string.IsNullOrWhiteSpace(uniqueKey))
+            if (string.IsNullOrWhiteSpace(uniqueKey)
+                || uniqueKey.Length > UniqueKeyMaxLength)
             {
                 return false;
             }
@@ -70,7 +77,8 @@ namespace PersonalBackend.Domain
         protected TObject Get<TObject>(string uniqueKey)
             where TObject : class
         {
-            if (string.IsNullOrWhiteSpace(uniqueKey))
+            if (string.IsNullOrWhiteSpace(uniqueKey)
+                || uniqueKey.Length > UniqueKeyMaxLength)
             {
                 return null;
             }
