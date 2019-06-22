@@ -28,6 +28,23 @@ namespace PersonalBackend.Tests
         }
 
         [Test]
+        public void Set_KeyIsLong_ReturnIsFalse()
+        {
+            // Arrange
+            var valuesMock = new Mock<IValuesRepository>();
+            var keyIdPairsMock = new Mock<IKeyIdPairsRepository>();
+            var personalBackend = new PersonalBackendModel(
+                valuesMock.Object,
+                keyIdPairsMock.Object);
+
+            // Act
+            var result = personalBackend.TestSetMethod<object>(new string('k', 200), null);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
         public void Set_ObjectIsNull_ReturnIsTrue()
         {
             // Arrange
@@ -175,6 +192,23 @@ namespace PersonalBackend.Tests
 
             // Act
             var result = personalBackend.TestGetMethod<object>(null);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void Get_KeyIsLong_ReturnIsNull()
+        {
+            // Arrange
+            var valuesMock = new Mock<IValuesRepository>();
+            var keyIdPairsMock = new Mock<IKeyIdPairsRepository>();
+            var personalBackend = new PersonalBackendModel(
+                valuesMock.Object,
+                keyIdPairsMock.Object);
+
+            // Act
+            var result = personalBackend.TestGetMethod<object>(new string('k', 200));
 
             // Assert
             Assert.IsNull(result);
